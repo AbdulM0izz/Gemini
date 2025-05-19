@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Main.css'
 import { assets } from '../../assets/assets'
+import { Context } from '../../Context/Context'
 
 const Main = () => {
+    const {onSent,ShowResult,RecentPromt,Loading,ResultData,SetInput,Input} = useContext(Context); 
   return (
     <div className='main'>
         <div className="nav">
@@ -34,11 +36,11 @@ const Main = () => {
             </div>
             <div className="main-bottom">
                 <div className="search-box">
-                    <input type="text" placeholder='Enter a promt here' />
+                    <input onChange={(e)=> SetInput(e.target.value)} value={Input} type="text" placeholder='Enter a promt here' />
                   <div>
                     <img src={assets.gallery_icon} alt="" />
                     <img src={assets.mic_icon} alt="" />
-                    <img src={assets.send_icon} alt="" />
+                    <img onClick={()=> onSent()} src={assets.send_icon} alt="" />
                   </div>
                 </div>
                 <p className="bottom-info">Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps. © Abdul Moiz 2025</p>
