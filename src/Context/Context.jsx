@@ -11,13 +11,29 @@ const ContextProvider = (Props) => {
   const [Loading, Setloading] = useState(false);
   const [Resltdata, SetResultData] = useState("");
 
+  const newchat = ()=> {
+    Setloading(false);
+    SetShowResult(false);
+  }
+
   const onSent = async (prompt) => {
     SetResultData("");
     Setloading(true);
     SetShowResult(true)
     SetRecentPromt(Input)
+    SetPrevPromts(prev=>[...prev,Input]);
     const response = await runChat(Input);
-    SetResultData(response);
+    let responseArray = response.split("**");
+    let newResponse = "";
+    for (let i=0; i<responseArray.length; i++) {
+      if(i === 0 || i % 2 !== 1) {
+         newResponse += responseArray[i];
+      } else {
+        newResponse += "<b>"+responseArray[i]+"</b>";
+      } 
+    }
+    let newResponse2 = newResponse.split("*").join("</br>")
+    SetResultData(newResponse2);
     Setloading(false)
     SetInput("");
   };
@@ -41,7 +57,8 @@ const ContextProvider = (Props) => {
     Loading,
     Setloading,
     Resltdata,
-    SetResultData
+    SetResultData,
+    newchat
   };
 
   return (
