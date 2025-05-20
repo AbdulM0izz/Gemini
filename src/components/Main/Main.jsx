@@ -4,7 +4,7 @@ import { assets } from '../../assets/assets'
 import { Context } from '../../Context/Context'
 
 const Main = () => {
-    const {onSent,ShowResult,RecentPromt,Loading,ResultData,SetInput,Input} = useContext(Context); 
+   const { onSent, ShowResult, RecentPromt, Loading, Resltdata, SetInput, Input } = useContext(Context);
   return (
     <div className='main'>
         <div className="nav">
@@ -12,6 +12,8 @@ const Main = () => {
             <img src={assets.Moiz} alt="" className='img'/>
         </div>
         <div className="main-container">
+            {! ShowResult ? 
+            <>
             <div className="greet">
                 <p><span>Hello, Gemini Clone By Abdul Moiz.</span></p>
                 <p>How can I help you today?</p>
@@ -34,6 +36,22 @@ const Main = () => {
                     <img src={assets.code_icon} alt="" />
                 </div>
             </div>
+            </> :<div className='result'>
+                 <div className="result-title">
+                    <img src={assets.Moiz} alt="" className='img'/>
+                    <p>{RecentPromt}</p>
+                 </div>
+                 <div className="result-data">
+                    <img src={assets.gemini_icon} alt="" />
+                    {Loading ? <div className='loader'>
+                        <hr />
+                        <hr />
+                        <hr />
+                    </div>: <p dangerouslySetInnerHTML={{ __html: Resltdata }}></p>}
+                 </div>
+                </div>
+             }
+            
             <div className="main-bottom">
                 <div className="search-box">
                     <input onChange={(e)=> SetInput(e.target.value)} value={Input} type="text" placeholder='Enter a promt here' />

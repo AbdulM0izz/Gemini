@@ -12,13 +12,21 @@ const ContextProvider = (Props) => {
   const [Resltdata, SetResultData] = useState("");
 
   const onSent = async (prompt) => {
+    SetResultData("");
+    Setloading(true);
+    SetShowResult(true)
+    SetRecentPromt(Input)
     const response = await runChat(Input);
-    SetInput(Input);
+    SetResultData(response);
+    Setloading(false)
+    SetInput("");
   };
 
-  useEffect(() => {
-    onSent(Input);
-  }, []);
+    useEffect(() => {
+      if (Input.trim() !== "") {
+        onSent(Input);
+      }
+    }, []);
 
   const ContextValue = {
     onSent,
